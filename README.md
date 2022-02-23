@@ -1,8 +1,10 @@
-# Clusterid
-
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/clusterid`. To experiment with that code, run `bin/console` for an interactive prompt.
-
+# ClusterID
 TODO: Delete this and the text above, and describe your gem
+
+
+## What's in the Box?
+TODO: Write this.
+
 
 ## Installation
 
@@ -20,20 +22,44 @@ Or install it yourself as:
 
     $ gem install clusterid
 
+
 ## Usage
 
 TODO: Write usage instructions here
 
-## Development
-
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake test` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and the created tag, and push the `.gem` file to [rubygems.org](https://rubygems.org).
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/clusterid.
+### Development
+To get started development on this gem run the `bin/setup` command. This will install dependencies and run the tests and linting tasks to ensure everything is working.
 
-## License
+For an interactive console with the gem loaded run `bin/console`.
 
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+
+### Testing
+Use the `bundle exec rake test` command to run unit tests. To install the gem onto your local machine for general integration testing use `bundle exec rake install`.
+
+To test the gem against each supported version of Ruby use `bin/test_versions`. This will create a Docker image for each version and run the tests and linting steps.
+
+
+### Releasing
+Do the following to release a new version of this gem:
+
+- Update the version number in [lib/clusterid/version.rb](./lib/clusterid/version.rb)
+- Ensure necessary documentation changes are complete
+- Ensure changes are in the [CHANGELOG.md](./CHANGELOG.md)
+- Create the new release using `bundle exec rake release`
+
+After this is done the following side-effects should be visible:
+
+- A new git tag for the version number should exist
+- Commits for the new version should be pushed to GitHub
+- The new gem should be available on [rubygems.org](https://rubygems.org).
+
+Finally, update the documentation hosted on GitHub Pages:
+
+- Check-out the `gh-pages` branch
+- Merge `main` into the `gh-pages` branch
+- Generate the documentation with `bundle exec rake yard`
+- Commit the documentation on the `gh-pages` branch
+- Push the new documentation so GitHub Pages can deploy it

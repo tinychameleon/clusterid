@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+RUBY_VERSIONS=(
+  2.6.0
+  2.6.9
+  2.7.0
+  2.7.5
+  3.0.0
+  3.0.3
+  3.1.0
+  3.1.1
+)
+
+IMAGE_PREFIX="clusterid"
+
+for v in ${RUBY_VERSIONS[@]}; do
+  docker build -t "${IMAGE_PREFIX}:${v}" --build-arg "VERSION=${v}" .
+done
+
+for v in ${RUBY_VERSIONS[@]}; do
+  echo "Running tests for Ruby ${v}..."
+  docker run --rm -ti -v "${PWD}:/workspace" "${IMAGE_PREFIX}:${v}" bundle exec rake
+done
