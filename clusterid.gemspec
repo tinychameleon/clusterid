@@ -4,7 +4,7 @@ require_relative "lib/clusterid/version"
 
 Gem::Specification.new do |spec|
   spec.name = "clusterid"
-  spec.version = Clusterid::VERSION
+  spec.version = ClusterId::VERSION
   spec.license = "MIT"
   spec.authors = ["Stephan Tarulli"]
   spec.email = ["srt@tinychameleon.com"]
