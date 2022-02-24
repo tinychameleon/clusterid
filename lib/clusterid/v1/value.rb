@@ -4,6 +4,8 @@ require 'date'
 
 module ClusterId
   module V1
+    FORMAT_VERSION = 1
+
     # A {ClusterId} version 1 format value.
     #
     # A {Value} contains the following accessible properties:
@@ -52,7 +54,7 @@ module ClusterId
 
       # @return [Integer] the value's version
       def version
-        1
+        FORMAT_VERSION
       end
 
       # @return [T] the value's deserialized environment
@@ -76,8 +78,13 @@ module ClusterId
       # @param bytes [String] the value as a byte string?
       # @param deserializer [Deserializer] a {Deserializer} to decode value attributes
       # @raise [InvalidByteLengthError] when the length of bytes is not {BYTE_SIZE}
+      # @raise [InvalidVersionError] when the data format version is not {FORMAT_VERSION}
       def initialize(bytes, deserializer)
         raise InvalidByteLengthError, bytes.length unless bytes.length == BYTE_SIZE
+
+        version = (bytes[7].unpack('C')[0] & 0xe0) >> 5
+        raise InvalidVersionError.new(FORMAT_VERSION, version) unless version == FORMAT_VERSION
+
         @bytes = bytes
         @deserializer = deserializer
       end

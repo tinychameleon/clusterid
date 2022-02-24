@@ -46,6 +46,12 @@ class TestClusterIdV1Value < Minitest::Test
     assert_raises(ClusterId::InvalidByteLengthError) { create_value "\x01" * 20 }
   end
 
+  def test_wrong_version_is_an_error
+    bad_data = DATA.dup
+    bad_data[7] = "\x49"
+    assert_raises(ClusterId::InvalidVersionError) { create_value bad_data }
+  end
+
   def test_datetime_extracts
     assert_instance_of DateTime, @value.datetime
     assert_equal "2022-02-24T01:40:21+00:00", @value.datetime.to_s
