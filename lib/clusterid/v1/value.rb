@@ -4,6 +4,7 @@ require 'date'
 
 module ClusterId
   module V1
+    # The data formation version
     FORMAT_VERSION = 1
 
     # A {ClusterId} version 1 format value.
