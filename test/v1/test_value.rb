@@ -39,6 +39,11 @@ class TestClusterIdV1Value < Minitest::Test
     assert_equal 1, @value.version
   end
 
+  def test_random_nonce_extracts_correctly
+    assert_instance_of Integer, @value.nonce
+    assert_equal 21542142465, @value.nonce
+  end
+
   def test_bytes_are_accessible
     assert_equal DATA, @value.bytes
   end

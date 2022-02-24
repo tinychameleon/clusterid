@@ -35,17 +35,28 @@ module ClusterId
     #  |  environment  |      data centre      |        version        |
     #  o---------------------------------------------------------------o
     class Value
+      # @return [String] the underlying value bytes
       attr_reader :bytes
 
+      # @return [DateTime] the value's creation datetime
       def datetime
         return @dt unless @dt.nil?
         @dt = DateTime.strptime(bytes[8..].unpack('Q')[0].to_s, "%Q")
       end
 
+      # @return [Integer] the value's random nonce
+      def nonce
+        return @nonce unless @nonce.nil?
+        @nonce = (bytes[..4] + "\x00\x00\x00").unpack('Q')[0]
+      end
+
+      # @return [Integer] the value's version
       def version
         1
       end
 
+      # @param bytes [String] the value as a byte string?
+      # @raise [InvalidByteLengthError] when the length of bytes is not {BYTE_SIZE}
       def initialize(bytes)
         raise InvalidByteLengthError, bytes.length unless bytes.length == BYTE_SIZE
         @bytes = bytes
