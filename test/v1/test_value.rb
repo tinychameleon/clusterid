@@ -4,10 +4,22 @@ require "test_helper"
 
 class TestClusterIdV1Value < Minitest::Test
   # TODO:
-  #   - initialize a value with some raw data
   #   - extract attribute tests
-  #   - error handling for extraction failures
   #   - error handling for deserializer failures
+
+  module FakeDeserializer
+    def self.to_data_centre(i)
+      "data_centre_#{i}"
+    end
+
+    def self.to_environment(i)
+      "environment_#{i}"
+    end
+
+    def self.to_type_id(i)
+      "type_id_#{i}"
+    end
+  end
 
   # Little-endian order for byte packing.
   DATA = [
@@ -21,16 +33,20 @@ class TestClusterIdV1Value < Minitest::Test
     "\x6d\xE5\x62\x29\x7F\x01\x00\x00",
   ].join.freeze
 
+  def create_value(data)
+    ClusterId::V1::Value.new(data, FakeDeserializer)
+  end
+
   def setup
-    @value = ClusterId::V1::Value.new(DATA)
+    @value = create_value DATA
   end
 
   def test_invalid_byte_length_is_an_error
-    assert_raises(ClusterId::InvalidByteLengthError) { ClusterId::V1::Value.new("\x01") }
-    assert_raises(ClusterId::InvalidByteLengthError) { ClusterId::V1::Value.new("\x01" * 20) }
+    assert_raises(ClusterId::InvalidByteLengthError) { create_value "\x01" }
+    assert_raises(ClusterId::InvalidByteLengthError) { create_value "\x01" * 20 }
   end
 
-  def test_datetime_extracts_correctly
+  def test_datetime_extracts
     assert_instance_of DateTime, @value.datetime
     assert_equal "2022-02-24T01:40:21+00:00", @value.datetime.to_s
   end
@@ -39,9 +55,21 @@ class TestClusterIdV1Value < Minitest::Test
     assert_equal 1, @value.version
   end
 
-  def test_random_nonce_extracts_correctly
+  def test_random_nonce_extracts
     assert_instance_of Integer, @value.nonce
     assert_equal 21542142465, @value.nonce
+  end
+
+  def test_environment_extracts_through_deserializer
+    assert_equal "environment_1", @value.environment
+  end
+
+  def test_data_centre_extracts_through_deserializer
+    assert_equal "data_centre_2", @value.data_centre
+  end
+
+  def test_type_id_extracts_through_deserializer
+    assert_equal "type_id_1798", @value.type_id
   end
 
   def test_bytes_are_accessible
