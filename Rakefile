@@ -20,5 +20,5 @@ task default: %i[test standard]
 
 desc "Type check via tests"
 task :rbs do |t|
-  sh "bundle exec rbs test --target 'ClusterID::*' bundle exec rake test"
+  sh "bundle exec rbs -r date -I sig test --target 'ClusterId::*' bundle exec rake test"
 end
