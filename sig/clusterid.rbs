@@ -28,11 +28,11 @@ module ClusterId
       def from_type_id: (T) -> Integer
     end
 
-    interface _ByteGenerator
+    interface _ByteSource
       def bytes: (Integer) -> String
     end
 
-    interface _MillisecondClock
+    interface _Clock
       def now_ms: () -> Integer
     end
 
@@ -50,7 +50,8 @@ module ClusterId
 
     class Generator[D, E, T]
       def generate: (data_centre: D, environment: E, type_id: T) -> Value[D, E, T]
-      def initialize: (_ByteGenerator, _MillisecondClock, Serializer[D, E, T]) -> void
+
+      def initialize: (_ByteSource, _Clock, Serializer[D, E, T], Deserializer[D, E, T]) -> void
     end
   end
 end
