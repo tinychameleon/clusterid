@@ -1,4 +1,37 @@
-module Clusterid
+module ClusterId
   VERSION: String
-  # See the writing guide of rbs: https://github.com/ruby/rbs#guides
+  BYTE_SIZE: 16
+
+  class Error < StandardError
+  end
+
+  class InvalidByteLengthError < Error
+    def initialize: (Integer) -> void
+  end
+
+  class InvalidVersionError < Error
+    def initialize: (Integer, Integer) -> void
+  end
+
+  module V1
+    FORMAT_VERSION: 1
+
+    class Deserializer[D, E, T]
+      def to_data_centre: (Integer) -> D
+      def to_environment: (Integer) -> E
+      def to_type_id: (Integer) -> T
+    end
+
+    class Value[D, E, T]
+      attr_reader bytes: String
+      def datetime: () -> DateTime
+      def nonce: () -> Integer
+      def version: () -> Integer
+      def environment: () -> E
+      def data_centre: () -> D
+      def type_id: () -> T
+
+      def initialize: (String, Deserializer[D, E, T]) -> void
+    end
+  end
 end
