@@ -76,7 +76,7 @@ module ClusterId
         @tid = @deserializer.to_type_id bytes[5..6].unpack('S')[0]
       end
 
-      # @param bytes [String] the value as a byte string?
+      # @param bytes [String] the value as a byte string
       # @param deserializer [Deserializer] a {Deserializer} to decode value attributes
       # @raise [InvalidByteLengthError] when the length of bytes is not {BYTE_SIZE}
       # @raise [InvalidVersionError] when the data format version is not {FORMAT_VERSION}
