@@ -31,11 +31,11 @@ module ClusterId
     #  |-------------------------------------------------------------------------------|
     #  |                                   timestamp                                   |
     #  o-------------------------------------------------------------------------------o
-    # With +details+ encoding the following data in little-endian:
+    # With the +details+ byte encoding the following data:
     #  o---------------------------------------------------------------o
-    #  | bit 1 | bit 2 | bit 3 | bit 4 | bit 5 | bit 6 | bit 7 | bit 8 |
+    #  | bit 8 | bit 7 | bit 6 | bit 5 | bit 4 | bit 3 | bit 2 | bit 1 |
     #  |---------------------------------------------------------------|
-    #  |  environment  |      data centre      |        version        |
+    #  |        version        |      data centre      |  environment  |
     #  o---------------------------------------------------------------o
     class Value
       # @return [String] the underlying value bytes
