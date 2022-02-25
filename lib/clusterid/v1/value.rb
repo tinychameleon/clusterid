@@ -41,16 +41,20 @@ module ClusterId
       # @return [String] the underlying value bytes
       attr_reader :bytes
 
+      # [RUBY 2.6][RUBY 2.7]
+      # Referencing undefined instance variables causes warnings to be emitted,
+      # so +instance_variable_defined?+ is used to determine memoization status.
+
       # @return [DateTime] the value's creation datetime
       def datetime
-        return @dt unless @dt.nil?
+        return @dt if instance_variable_defined? :@dt
         @dt = DateTime.strptime(bytes[8..].unpack('Q')[0].to_s, "%Q")
       end
 
       # @return [Integer] the value's random nonce
       def nonce
-        return @nonce unless @nonce.nil?
-        @nonce = (bytes[..4] + "\x00\x00\x00").unpack('Q')[0]
+        return @nonce if instance_variable_defined? :@nonce
+        @nonce = (bytes[0..4] + "\x00\x00\x00").unpack('Q')[0]
       end
 
       # @return [Integer] the value's version
@@ -60,19 +64,19 @@ module ClusterId
 
       # @return [T] the value's deserialized environment
       def environment
-        return @env unless @env.nil?
+        return @env if instance_variable_defined? :@env
         @env = @deserializer.to_environment bytes[7].unpack('C')[0] & 0x03
       end
 
       # @return [T] the value's deserialized data centre
       def data_centre
-        return @dc unless @dc.nil?
+        return @dc if instance_variable_defined? :@dc
         @dc = @deserializer.to_data_centre (bytes[7].unpack('C')[0] & 0x1c) >> 2
       end
 
       # @return [T] the value's deserialized type ID
       def type_id
-        return @tid unless @tid.nil?
+        return @tid if instance_variable_defined? :@tid
         @tid = @deserializer.to_type_id bytes[5..6].unpack('S')[0]
       end
 
