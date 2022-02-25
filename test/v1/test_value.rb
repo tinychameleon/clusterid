@@ -3,10 +3,6 @@
 require "test_helper"
 
 class TestClusterIdV1Value < Minitest::Test
-  # TODO:
-  #   - extract attribute tests
-  #   - error handling for deserializer failures
-
   class FakeDeserializer < ClusterId::V1::Deserializer
     def to_data_centre(i)
       "data_centre_#{i}"

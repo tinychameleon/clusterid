@@ -1,6 +1,27 @@
 # frozen_string_literal: true
 
 module ClusterId::V1
+  # The abstract base class of all custom serialization logic.
+  class Serializer
+    # @param t [T] the environment
+    # @return [Integer] the serialized environment
+    def from_environment(t)
+      raise NotImplementedError
+    end
+
+    # @param t [T] the data centre
+    # @return [Integer] the serialized data centre
+    def from_data_centre(t)
+      raise NotImplementedError
+    end
+
+    # @param t [T] the type ID
+    # @return [Integer] the serialized type ID
+    def from_type_id(t)
+      raise NotImplementedError
+    end
+  end
+
   # The abstract base class of all custom deserializtion logic.
   class Deserializer
     # @param i [Integer] the serialized environment

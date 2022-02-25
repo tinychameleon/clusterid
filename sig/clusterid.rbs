@@ -22,6 +22,20 @@ module ClusterId
       def to_type_id: (Integer) -> T
     end
 
+    class Serializer[D, E, T]
+      def from_data_centre: (D) -> Integer
+      def from_environment: (E) -> Integer
+      def from_type_id: (T) -> Integer
+    end
+
+    interface _ByteGenerator
+      def bytes: (Integer) -> String
+    end
+
+    interface _MillisecondClock
+      def now_ms: () -> Integer
+    end
+
     class Value[D, E, T]
       attr_reader bytes: String
       def datetime: () -> DateTime
@@ -32,6 +46,11 @@ module ClusterId
       def type_id: () -> T
 
       def initialize: (String, Deserializer[D, E, T]) -> void
+    end
+
+    class Generator[D, E, T]
+      def generate: (data_centre: D, environment: E, type_id: T) -> Value[D, E, T]
+      def initialize: (_ByteGenerator, _MillisecondClock, Serializer[D, E, T]) -> void
     end
   end
 end
