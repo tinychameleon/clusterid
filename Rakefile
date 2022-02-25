@@ -18,7 +18,12 @@ end
 
 task default: %i[test standard]
 
+desc "Run current benchmarks"
+task :benchmark do
+  sh "date; bundle exec ruby test/benchmarks/current.rb"
+end
+
 desc "Type check via tests"
-task :rbs do |t|
+task :rbs do
   sh "bundle exec rbs -r date -I sig test --target 'ClusterId::*' bundle exec rake test"
 end
