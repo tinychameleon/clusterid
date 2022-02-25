@@ -7,16 +7,16 @@ class TestClusterIdV1Value < Minitest::Test
   #   - extract attribute tests
   #   - error handling for deserializer failures
 
-  module FakeDeserializer
-    def self.to_data_centre(i)
+  class FakeDeserializer < ClusterId::V1::Deserializer
+    def to_data_centre(i)
       "data_centre_#{i}"
     end
 
-    def self.to_environment(i)
+    def to_environment(i)
       "environment_#{i}"
     end
 
-    def self.to_type_id(i)
+    def to_type_id(i)
       "type_id_#{i}"
     end
   end
@@ -34,7 +34,7 @@ class TestClusterIdV1Value < Minitest::Test
   ].join.freeze
 
   def create_value(data)
-    ClusterId::V1::Value.new(data, FakeDeserializer)
+    ClusterId::V1::Value.new(data, FakeDeserializer.new)
   end
 
   def setup
