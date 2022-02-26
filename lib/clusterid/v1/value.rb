@@ -25,6 +25,10 @@ module ClusterId
     #
     # It also provides access to the underlying bytes.
     #
+    # === Random Nonce
+    # A 5 byte random nonce supports generating approximately 150,000 values before
+    # reaching a 1% chance of collision. This applies to each millisecond.
+    #
     # === Data Layout
     # The byte layout of a version 1 value in little-endian is:
     #  o-------------------------------------------------------------------------------o

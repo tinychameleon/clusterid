@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "securerandom"
+
 module ClusterId
   module V1
     # Create instances of {Value} objects based on time, random data, and serializable
@@ -10,15 +12,15 @@ module ClusterId
       #       Overflow will either be discarded or overwrite other bits. See the {Value}
       #       class for allowed bit lengths.
       #
-      # @param byte_generator [#bytes(n)] an object which provides random bytes
-      # @param clock [#now_ms] an object which provides millisecond timestamps
       # @param serializer [Serializer] an object which serializes {Value} attributes
       # @param deserializer [Deserializer] an object which deserializes {Value} attributes
-      def initialize(byte_generator, clock, serializer, deserializer)
-        @byte_generator = byte_generator
-        @clock = clock
+      # @param byte_generator [#bytes(n)] an object which provides random bytes
+      # @param clock [#now_ms] an object which provides millisecond timestamps
+      def initialize(serializer, deserializer, byte_generator = SecureRandom, clock = Clock)
         @serializer = serializer
         @deserializer = deserializer
+        @byte_generator = byte_generator
+        @clock = clock
       end
 
       # Generate a {Value} for a given data centre, environment, and type ID.

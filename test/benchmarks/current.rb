@@ -7,12 +7,6 @@ require "date"
 require "securerandom"
 require "clusterid"
 
-module Clock
-  def self.now_ms
-    DateTime.now.strftime("%Q").to_i
-  end
-end
-
 class Serializer < ClusterId::V1::Serializer
   def from_data_centre(s)
     case s
@@ -57,10 +51,7 @@ DATA = "\x01\x02\x03\x04\x05\x06\x07\x29\x6d\xE5\x62\x29\x7F\x01\x00\x00"
 
 Benchmark.ips do |b|
   deserializer = Deserializer.new
-
-  generator = ClusterId::V1::Generator.new(
-    SecureRandom, Clock, Serializer.new, deserializer
-  )
+  generator = ClusterId::V1::Generator.new(Serializer.new, deserializer)
 
   b.report("generate") do |n|
     n.times do
