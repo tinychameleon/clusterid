@@ -36,8 +36,8 @@ module ClusterId
         # Details (Version, Data Centre, Environment)
         raw_data += [
           (FORMAT_VERSION << 5) +
-          (@serializer.from_data_centre(data_centre) << 2) +
-          @serializer.from_environment(environment)
+            (@serializer.from_data_centre(data_centre) << 2) +
+            @serializer.from_environment(environment)
         ].pack("C")
         # Timestamp
         raw_data += [@clock.now_ms].pack("Q")

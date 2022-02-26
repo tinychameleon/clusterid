@@ -26,7 +26,7 @@ class TestClusterIdV1Value < Minitest::Test
     # Version 1 (3 bits), Data Centre 4 (3 bits), Environment 1 (2 bits), 1 byte.
     "\x29",
     # Timestamp (milliseconds), 8 bytes
-    "\x6d\xE5\x62\x29\x7F\x01\x00\x00",
+    "\x6d\xE5\x62\x29\x7F\x01\x00\x00"
   ].join.freeze
 
   def create_value(data)

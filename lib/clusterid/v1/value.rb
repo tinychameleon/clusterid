@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'date'
+require "date"
 
 module ClusterId
   # Data format version 1 for {ClusterId} identifiers. This format supports
@@ -53,13 +53,13 @@ module ClusterId
       # @return [DateTime] the value's creation datetime
       def datetime
         return @dt if instance_variable_defined? :@dt
-        @dt = DateTime.strptime(bytes[8..].unpack('Q')[0].to_s, "%Q")
+        @dt = DateTime.strptime(bytes[8..].unpack1("Q").to_s, "%Q")
       end
 
       # @return [Integer] the value's random nonce
       def nonce
         return @nonce if instance_variable_defined? :@nonce
-        @nonce = (bytes[0..4] + "\x00\x00\x00").unpack('Q')[0]
+        @nonce = (bytes[0..4] + "\x00\x00\x00").unpack1("Q")
       end
 
       # @return [Integer] the value's version
@@ -70,19 +70,19 @@ module ClusterId
       # @return [T] the value's deserialized environment
       def environment
         return @env if instance_variable_defined? :@env
-        @env = @deserializer.to_environment bytes[7].unpack('C')[0] & 0x03
+        @env = @deserializer.to_environment bytes[7].unpack1("C") & 0x03
       end
 
       # @return [T] the value's deserialized data centre
       def data_centre
         return @dc if instance_variable_defined? :@dc
-        @dc = @deserializer.to_data_centre (bytes[7].unpack('C')[0] & 0x1c) >> 2
+        @dc = @deserializer.to_data_centre (bytes[7].unpack1("C") & 0x1c) >> 2
       end
 
       # @return [T] the value's deserialized type ID
       def type_id
         return @tid if instance_variable_defined? :@tid
-        @tid = @deserializer.to_type_id bytes[5..6].unpack('S')[0]
+        @tid = @deserializer.to_type_id bytes[5..6].unpack1("S")
       end
 
       # @param bytes [String] the value as a byte string
@@ -92,7 +92,7 @@ module ClusterId
       def initialize(bytes, deserializer)
         raise InvalidByteLengthError, bytes.length unless bytes.length == BYTE_SIZE
 
-        version = (bytes[7].unpack('C')[0] & 0xe0) >> 5
+        version = (bytes[7].unpack1("C") & 0xe0) >> 5
         raise InvalidVersionError.new(FORMAT_VERSION, version) unless version == FORMAT_VERSION
 
         @bytes = bytes
