@@ -5,6 +5,11 @@ module ClusterId
     # Create instances of {Value} objects based on time, random data, and serializable
     # values for data centre, environment, and type IDs.
     class Generator
+      # @note It is the caller's responsibility to ensure the serializer and deserializer
+      #       follow the expected bit lengths for custom types. No overflow checks are done.
+      #       Overflow will either be discarded or overwrite other bits. See the {Value}
+      #       class for allowed bit lengths.
+      #
       # @param byte_generator [#bytes(n)] an object which provides random bytes
       # @param clock [#now_ms] an object which provides millisecond timestamps
       # @param serializer [Serializer] an object which serializes {Value} attributes
