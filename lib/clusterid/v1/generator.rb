@@ -1,7 +1,13 @@
 # frozen_string_literal: true
 
 module ClusterId::V1
+  # Create instances of {Value} objects based on time, random data, and serializable
+  # values for data centre, environment, and type IDs.
   class Generator
+    # @param byte_generator [#bytes(n)] an object which provides random bytes
+    # @param clock [#now_ms] an object which provides millisecond timestamps
+    # @param serializer [Serializer] an object which serializes {Value} attributes
+    # @param deserializer [Deserializer] an object which deserializes {Value} attributes
     def initialize(byte_generator, clock, serializer, deserializer)
       @byte_generator = byte_generator
       @clock = clock
@@ -9,6 +15,12 @@ module ClusterId::V1
       @deserializer = deserializer
     end
 
+    # Generate a {Value} for a given data centre, environment, and type ID.
+    #
+    # @param data_centre [D] a serializable value representing the data centre the {Value} is generated within
+    # @param environment [E] a serializable value representing the environment the {Value} is generated within
+    # @param type_id [T] a serializable value representing the type of entity for a generated {Value}
+    # @return [Value] a time-based, partially random value to identify an entity
     def generate(data_centre:, environment:, type_id:)
       raw_data = +""
       # Nonce
