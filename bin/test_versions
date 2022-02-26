@@ -20,5 +20,5 @@ done
 
 for v in ${RUBY_VERSIONS[@]}; do
   echo "Running tests for Ruby ${v}..."
-  docker run --rm -ti -v "${PWD}:/workspace" "${IMAGE_PREFIX}:${v}" bundle exec rake
+  docker run --rm -ti -v "${PWD}:/workspace" "${IMAGE_PREFIX}:${v}" bundle exec rake test
 done
