@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors = ["Stephan Tarulli"]
   spec.email = ["srt@tinychameleon.com"]
 
-  spec.summary = "Unique IDs for distributed databases"
-  spec.description = "Unique IDs for distributed databases"
+  spec.summary = "Create unique identifiers for entities in distributed systems"
+  spec.description = "Create unique identifiers for entities in distributed systems"
   spec.homepage = "https://github.com/tinychameleon/clusterid"
   spec.required_ruby_version = ">= 2.6.0"
 

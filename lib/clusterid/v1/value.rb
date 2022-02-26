@@ -3,8 +3,13 @@
 require 'date'
 
 module ClusterId
+  # Data format version 1 for {ClusterId} identifiers. This format supports
+  # custom value serialization for data centre, environment, and type IDs.
+  #
+  # @see Value
+  # @see Generator
   module V1
-    # The data formation version
+    # The data format version
     FORMAT_VERSION = 1
 
     # A {ClusterId} version 1 format value.
@@ -81,7 +86,7 @@ module ClusterId
       end
 
       # @param bytes [String] the value as a byte string
-      # @param deserializer [Deserializer] a {Deserializer} to decode value attributes
+      # @param deserializer [Deserializer] a {Deserializer} to decode custom value attributes
       # @raise [InvalidByteLengthError] when the length of bytes is not {BYTE_SIZE}
       # @raise [InvalidVersionError] when the data format version is not {FORMAT_VERSION}
       def initialize(bytes, deserializer)
