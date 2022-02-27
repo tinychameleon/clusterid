@@ -29,6 +29,14 @@ class TestClusterIdV1Value < Minitest::Test
     "\x6d\xE5\x62\x29\x7F\x01\x00\x00"
   ].join.freeze
 
+  LATER_DATA = +DATA
+  LATER_DATA[14] = "\x01"
+  LATER_DATA.freeze
+
+  EARLIER_DATA = +DATA
+  EARLIER_DATA[13] = "\x00"
+  EARLIER_DATA.freeze
+
   def create_value(data)
     ClusterId::V1::Value.new(data, FakeDeserializer.new)
   end
@@ -76,5 +84,21 @@ class TestClusterIdV1Value < Minitest::Test
 
   def test_bytes_are_accessible
     assert_equal DATA, @value.bytes
+  end
+
+  def test_value_includes_comparable
+    assert_includes ClusterId::V1::Value, Comparable
+  end
+
+  def test_comparable_ordering_uses_timestamps
+    first = create_value EARLIER_DATA
+    second = create_value DATA
+    third = create_value LATER_DATA
+
+    assert second.between? first, third
+    assert second > first
+    assert third > first
+    assert second.dup == second
+    assert [first, second, third], [second, third, first].sort
   end
 end

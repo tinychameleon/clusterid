@@ -25,6 +25,8 @@ module ClusterId
     #
     # It also provides access to the underlying bytes.
     #
+    # Instances of {Value} are +Comparable+ based on the timestamp.
+    #
     # === Random Nonce
     # A 5 byte random nonce supports generating approximately 150,000 values before
     # reaching a 1% chance of collision. This applies to each millisecond.
@@ -47,6 +49,8 @@ module ClusterId
     #  |        version        |      data centre      |  environment  |
     #  o---------------------------------------------------------------o
     class Value
+      include Comparable
+
       # @return [String] the underlying value bytes
       attr_reader :bytes
 
@@ -101,6 +105,14 @@ module ClusterId
 
         @bytes = bytes
         @deserializer = deserializer
+      end
+
+      # Compares {Value} objects using {#datetime}
+      #
+      # @param other [Value] the object to compare against
+      # @return [-1, 0, 1] -1 when less than +other+, 0 when equal to +other+, 1 when greater than +other+
+      def <=>(other)
+        datetime <=> other.datetime
       end
     end
   end

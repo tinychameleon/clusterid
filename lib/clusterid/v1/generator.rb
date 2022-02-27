@@ -29,7 +29,7 @@ module ClusterId
       # @param environment [E] a serializable value representing the environment the {Value} is generated within
       # @param type_id [T] a serializable value representing the type of entity for a generated {Value}
       # @return [Value] a time-based, partially random value to identify an entity
-      def generate(data_centre:, environment:, type_id:)
+      def generate(data_centre: nil, environment: nil, type_id: nil)
         raw_data = +""
         # Nonce
         raw_data += @byte_generator.bytes(5)
@@ -45,6 +45,11 @@ module ClusterId
         raw_data += [@clock.now_ms].pack("Q")
 
         Value.new(raw_data.freeze, @deserializer)
+      end
+
+      # @return [Value] the {Value} represented by +s+
+      def from_byte_string(s)
+        Value.new(s, @deserializer)
       end
     end
   end

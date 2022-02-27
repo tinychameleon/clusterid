@@ -68,4 +68,10 @@ class TestClusterIdV1Generator < Minitest::Test
     assert_equal "environment_2", v.environment
     assert_equal "type_id_1234", v.type_id
   end
+
+  def test_generator_can_reconstruct_from_a_byte_string
+    a = @generator.generate(data_centre: "data_centre_1", environment: "environment_2", type_id: "type_id_3")
+    b = @generator.from_byte_string(a.bytes)
+    assert_equal a, b
+  end
 end
