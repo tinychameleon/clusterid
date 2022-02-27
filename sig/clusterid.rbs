@@ -57,5 +57,11 @@ module ClusterId
     class Clock
       include _Clock
     end
+
+    class NullSerializer < Serializer[top, top, top]
+    end
+
+    class NullDeserializer < Deserializer[nil, nil, nil]
+    end
   end
 end

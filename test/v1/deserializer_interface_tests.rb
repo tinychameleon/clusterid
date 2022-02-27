@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module DeserializerInterfaceTests
+module V1DeserializerInterfaceTests
   def test_deserializer_responds_to_method_to_environment
     assert_respond_to @deserializer, :to_environment
   end

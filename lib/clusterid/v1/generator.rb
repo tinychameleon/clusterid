@@ -16,7 +16,7 @@ module ClusterId
       # @param deserializer [Deserializer] an object which deserializes {Value} attributes
       # @param byte_generator [#bytes(n)] an object which provides random bytes
       # @param clock [#now_ms] an object which provides millisecond timestamps
-      def initialize(serializer, deserializer, byte_generator = SecureRandom, clock = Clock)
+      def initialize(serializer = NullSerializer.new, deserializer = NullDeserializer.new, byte_generator = SecureRandom, clock = Clock)
         @serializer = serializer
         @deserializer = deserializer
         @byte_generator = byte_generator
