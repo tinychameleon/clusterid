@@ -28,4 +28,3 @@ class TestV1NullSerializer < Minitest::Test
     end
   end
 end
-

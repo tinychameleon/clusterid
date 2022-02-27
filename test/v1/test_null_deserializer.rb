@@ -23,7 +23,7 @@ class TestV1NullDeserializer < Minitest::Test
   end
 
   def test_to_type_id_always_returns_nil
-    (0..2**16-1).each do |n|
+    (0..2**16 - 1).each do |n|
       assert_nil @deserializer.to_type_id n
     end
   end
