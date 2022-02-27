@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    clusterid (0.1.0)
+    clusterid (1.0.0)
 
 GEM
   remote: https://rubygems.org/
