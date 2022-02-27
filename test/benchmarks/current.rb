@@ -61,6 +61,10 @@ Benchmark.ips do |b|
     end
   end
 
+  b.report("from_byte_string") do |n|
+    n.times { generator.from_byte_string(DATA) }
+  end
+
   b.report("value") do |n|
     n.times { ClusterId::V1::Value.new(DATA, deserializer) }
   end
