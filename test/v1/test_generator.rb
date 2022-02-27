@@ -54,7 +54,10 @@ class TestClusterIdV1Generator < Minitest::Test
 
   def setup
     @generator = ClusterId::V1::Generator.new(
-      FakeSerializer.new, FakeDeserializer.new, FakeByteGenerator.new, FakeClock.new
+      serializer: FakeSerializer.new,
+      deserializer: FakeDeserializer.new,
+      byte_generator: FakeByteGenerator.new,
+      clock: FakeClock.new
     )
   end
 

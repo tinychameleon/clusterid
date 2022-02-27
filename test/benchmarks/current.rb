@@ -51,7 +51,7 @@ DATA = "\x01\x02\x03\x04\x05\x06\x07\x29\x6d\xE5\x62\x29\x7F\x01\x00\x00"
 
 Benchmark.ips do |b|
   deserializer = Deserializer.new
-  generator = ClusterId::V1::Generator.new(Serializer.new, deserializer)
+  generator = ClusterId::V1::Generator.new(serializer: Serializer.new, deserializer: deserializer)
 
   b.report("generate") do |n|
     n.times do
