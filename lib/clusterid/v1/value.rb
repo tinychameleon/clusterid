@@ -107,12 +107,26 @@ module ClusterId
         @deserializer = deserializer
       end
 
-      # Compares {Value} objects using {#datetime}
+      # Compares {Value} objects.
       #
       # @param other [Value] the object to compare against
       # @return [-1, 0, 1] -1 when less than +other+, 0 when equal to +other+, 1 when greater than +other+
       def <=>(other)
-        datetime <=> other.datetime
+        return nil if self.class != other.class
+
+        cmp = datetime <=> other.datetime
+        return cmp unless cmp.zero?
+
+        cmp = data_centre <=> other.data_centre
+        return cmp unless cmp.zero?
+
+        cmp = environment <=> other.environment
+        return cmp unless cmp.zero?
+
+        cmp = type_id <=> other.type_id
+        return cmp unless cmp.zero?
+
+        nonce <=> other.nonce
       end
     end
   end

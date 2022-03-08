@@ -18,7 +18,7 @@ Gem::Specification.new do |spec|
   spec.metadata["source_code_uri"] = spec.homepage
   spec.metadata["changelog_uri"] = File.join(spec.homepage, "blob/main/CHANGELOG.md")
   spec.metadata["bug_tracker_uri"] = File.join(spec.homepage, "issues")
-  spec.metadata["documentation_uri"] = "https://tinychameleon.github.com/clusterid/"
+  spec.metadata["documentation_uri"] = "https://tinychameleon.github.io/clusterid/"
 
   spec.files = Dir["README.md", "CHANGELOG.md", "LICENSE.txt", "lib/**/*.rb", "sig/**/*.rbs"]
 

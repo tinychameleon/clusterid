@@ -29,13 +29,14 @@ class TestClusterIdV1Value < Minitest::Test
     "\x6d\xE5\x62\x29\x7F\x01\x00\x00"
   ].join.freeze
 
-  LATER_DATA = +DATA
-  LATER_DATA[14] = "\x01"
-  LATER_DATA.freeze
+  def self.mutate_data(index, byte)
+    bytes = +DATA.dup
+    bytes[index] = byte
+    bytes.freeze
+  end
 
-  EARLIER_DATA = +DATA
-  EARLIER_DATA[13] = "\x00"
-  EARLIER_DATA.freeze
+  LATER_DATA = mutate_data 14, "\x01"
+  EARLIER_DATA = mutate_data 13, "\x00"
 
   def create_value(data)
     ClusterId::V1::Value.new(data, FakeDeserializer.new)
@@ -100,5 +101,28 @@ class TestClusterIdV1Value < Minitest::Test
     assert third > first
     assert second.dup == second
     assert [first, second, third], [second, third, first].sort
+  end
+
+  def test_value_can_be_compared_across_types
+    assert_nil @value <=> false
+    assert_nil @value <=> Time.now
+  end
+
+  def test_comparison_checks_further_properties_if_timestamps_are_equal
+    # data centre
+    other = create_value(self.class.mutate_data(7, "\x39"))
+    refute @value == other
+
+    # environment
+    other = create_value(self.class.mutate_data(7, "\x2a"))
+    refute @value == other
+
+    # type id
+    other = create_value(self.class.mutate_data(5, "\x12"))
+    refute @value == other
+
+    # nonce
+    other = create_value(self.class.mutate_data(2, "\x42"))
+    refute @value == other
   end
 end
