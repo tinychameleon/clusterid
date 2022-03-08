@@ -245,7 +245,7 @@ o---------------------------------------------------------------o
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Compares <span class='object_link'><a href="" title="ClusterId::V1::Value (class)">Value</a></span> objects using <span class='object_link'><a href="#datetime-instance_method" title="ClusterId::V1::Value#datetime (method)">#datetime</a></span>.</p>
+<p>Compares <span class='object_link'><a href="" title="ClusterId::V1::Value (class)">Value</a></span> objects.</p>
 </div></span>
   
 </li>
@@ -666,7 +666,7 @@ o---------------------------------------------------------------o
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Compares <span class='object_link'><a href="" title="ClusterId::V1::Value (class)">ClusterId::V1::Value</a></span> objects using <span class='object_link'><a href="#datetime-instance_method" title="ClusterId::V1::Value#datetime (method)">#datetime</a></span></p>
+<p>Compares <span class='object_link'><a href="" title="ClusterId::V1::Value (class)">ClusterId::V1::Value</a></span> objects.</p>
 
 
   </div>
@@ -736,13 +736,41 @@ o---------------------------------------------------------------o
 
 114
 115
-116</pre>
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/clusterid/v1/value.rb', line 114</span>
 
 <span class='kw'>def</span> <span class='op'>&lt;=&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_datetime'>datetime</span> <span class='op'>&lt;=&gt;</span> <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_datetime'>datetime</span>
+  <span class='kw'>return</span> <span class='kw'>nil</span> <span class='kw'>if</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span> <span class='op'>!=</span> <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span>
+
+  <span class='id identifier rubyid_cmp'>cmp</span> <span class='op'>=</span> <span class='id identifier rubyid_datetime'>datetime</span> <span class='op'>&lt;=&gt;</span> <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_datetime'>datetime</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_cmp'>cmp</span> <span class='kw'>unless</span> <span class='id identifier rubyid_cmp'>cmp</span><span class='period'>.</span><span class='id identifier rubyid_zero?'>zero?</span>
+
+  <span class='id identifier rubyid_cmp'>cmp</span> <span class='op'>=</span> <span class='id identifier rubyid_data_centre'>data_centre</span> <span class='op'>&lt;=&gt;</span> <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_data_centre'>data_centre</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_cmp'>cmp</span> <span class='kw'>unless</span> <span class='id identifier rubyid_cmp'>cmp</span><span class='period'>.</span><span class='id identifier rubyid_zero?'>zero?</span>
+
+  <span class='id identifier rubyid_cmp'>cmp</span> <span class='op'>=</span> <span class='id identifier rubyid_environment'>environment</span> <span class='op'>&lt;=&gt;</span> <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_environment'>environment</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_cmp'>cmp</span> <span class='kw'>unless</span> <span class='id identifier rubyid_cmp'>cmp</span><span class='period'>.</span><span class='id identifier rubyid_zero?'>zero?</span>
+
+  <span class='id identifier rubyid_cmp'>cmp</span> <span class='op'>=</span> <span class='id identifier rubyid_type_id'>type_id</span> <span class='op'>&lt;=&gt;</span> <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_type_id'>type_id</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_cmp'>cmp</span> <span class='kw'>unless</span> <span class='id identifier rubyid_cmp'>cmp</span><span class='period'>.</span><span class='id identifier rubyid_zero?'>zero?</span>
+
+  <span class='id identifier rubyid_nonce'>nonce</span> <span class='op'>&lt;=&gt;</span> <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_nonce'>nonce</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1214,7 +1242,7 @@ o---------------------------------------------------------------o
 </div>
 
       <div id="footer">
-  Generated on Sat Feb 26 19:43:22 2022 by
+  Generated on Mon Mar  7 18:49:37 2022 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-3.1.0).
 </div>
