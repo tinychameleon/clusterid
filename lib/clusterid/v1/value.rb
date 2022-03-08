@@ -107,7 +107,7 @@ module ClusterId
         @deserializer = deserializer
       end
 
-      # Compares {Value} objects using {#datetime}
+      # Compares {Value} objects.
       #
       # @param other [Value] the object to compare against
       # @return [-1, 0, 1] -1 when less than +other+, 0 when equal to +other+, 1 when greater than +other+
